@@ -1,6 +1,10 @@
+import com.kakaovx.practice.buildsrc.Dependencies
+
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'dagger.hilt.android.plugin'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -34,6 +38,9 @@ android {
 
 dependencies {
     implementation project(":network")
+
+    implementation Dependencies.hilt
+    kapt Dependencies.hiltCompiler
 
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.5.1'
