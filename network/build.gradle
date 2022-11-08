@@ -14,5 +14,4 @@ dependencies {
     api Dependencies.retrofit
     api Dependencies.retrofitConverterGson
     api Dependencies.retrofitConverterScalars
-    api Dependencies.okhttpLoggingInterceptor
 }
