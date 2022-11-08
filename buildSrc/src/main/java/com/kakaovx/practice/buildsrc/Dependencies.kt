@@ -3,6 +3,7 @@ package com.kakaovx.practice.buildsrc
 object Versions {
     internal const val HILT = "2.44"
     internal const val RETROFIT = "2.9.0"
+    internal const val OKHTTP_LOGGING = "4.10.0"
 }
 
 object Dependencies {
@@ -13,4 +14,5 @@ object Dependencies {
     const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.RETROFIT}"
     const val retrofitConverterGson = "com.squareup.retrofit2:converter-gson:${Versions.RETROFIT}"
     const val retrofitConverterScalars = "com.squareup.retrofit2:converter-scalars:${Versions.RETROFIT}"
+    const val okhttpLoggingInterceptor = "com.squareup.okhttp3:logging-interceptor:$${Versions.OKHTTP_LOGGING}"
 }
