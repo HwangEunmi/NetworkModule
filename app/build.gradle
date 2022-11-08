@@ -39,6 +39,8 @@ android {
 dependencies {
     implementation project(":network")
 
+    implementation Dependencies.viewModelKtx
+
     implementation Dependencies.hilt
     kapt Dependencies.hiltCompiler
 

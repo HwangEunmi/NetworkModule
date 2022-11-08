@@ -1,6 +1,7 @@
 package com.kakaovx.practice.buildsrc
 
 object Versions {
+    internal const val VIEWMODEL_KTX = "2.5.1"
     internal const val HILT = "2.44"
     internal const val RETROFIT = "2.9.0"
     internal const val OKHTTP = "4.10.0"
@@ -8,6 +9,8 @@ object Versions {
 }
 
 object Dependencies {
+    const val viewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.VIEWMODEL_KTX}"
+
     const val hilt = "com.google.dagger:hilt-android:${Versions.HILT}"
     const val hiltCompiler = "com.google.dagger:hilt-compiler:${Versions.HILT}"
     const val hiltPlugin = "com.google.dagger:hilt-android-gradle-plugin:${Versions.HILT}"
