@@ -4,6 +4,7 @@ object Versions {
     internal const val HILT = "2.44"
     internal const val RETROFIT = "2.9.0"
     internal const val OKHTTP = "4.10.0"
+    internal const val COROUTINE = "1.6.4"
 }
 
 object Dependencies {
@@ -18,4 +19,7 @@ object Dependencies {
     const val okhttpPlatform = "com.squareup.okhttp3:okhttp-bom:${Versions.OKHTTP}"
     const val okhttp = "com.squareup.okhttp3:okhttp"
     const val okhttpLoggingInterceptor = "com.squareup.okhttp3:logging-interceptor"
+
+    const val coroutineCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.COROUTINE}"
+    const val coroutineAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.COROUTINE}"
 }
