@@ -4,9 +4,9 @@ import com.kakaovx.practice.network.ApiResponse
 import com.kakaovx.practice.networkmodule.model.UserInfoResponse
 import com.kakaovx.practice.networkmodule.repository.GitRepository
 
-class GetUserInfoUseCase(private val repository: GitRepository) {
+class GetUserInfoUseCase(private val gitRepository: GitRepository) {
     suspend operator fun invoke(params: Params): ApiResponse<UserInfoResponse> {
-        return repository.getUserInfo(params.username)
+        return gitRepository.getUserInfo(params.username)
     }
 
     data class Params(
