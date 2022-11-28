@@ -1,16 +1,16 @@
 package com.kakaovx.practice.networkmodule.network
 
-import com.kakaovx.practice.network.ApiResponse
-import com.kakaovx.practice.networkmodule.model.UserInfoResponse
+import com.kakaovx.practice.networkmodule.model.TestUserInfoResponse
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface GithubApi {
     @GET("/users/{username}")
-    suspend fun getUserInfo(
-        @Path("username") username: String
-    ): ApiResponse<UserInfoResponse>
+    // fun getUserInfo(@Path("username") username: String): Response<UserInfoResponse>
+    suspend fun getUserInfo(@Path("username") username: String): Response<TestUserInfoResponse>
 
     @GET("/users")
-    suspend fun getUserList(): ApiResponse<List<UserInfoResponse>>
+    // fun getUserList(): Response<List<UserInfoResponse>>
+    suspend fun getUserList(): Response<List<TestUserInfoResponse>>
 }
