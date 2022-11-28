@@ -1,5 +1,7 @@
 package com.kakaovx.practice.networkmodule.network
 
+import com.kakaovx.practice.networkmodule.datasource.GitDataSource
+import com.kakaovx.practice.networkmodule.datasource.GitDataSourceImpl
 import com.kakaovx.practice.networkmodule.repository.GitRepository
 import com.kakaovx.practice.networkmodule.repository.GitRepositoryImpl
 import dagger.Binds
@@ -17,6 +19,11 @@ internal abstract class RemoteDataModule {
     abstract fun bindsGitRepository(
         repository: GitRepositoryImpl
     ): GitRepository
+
+    @Binds
+    abstract fun bindsGitDataSource(
+        dataSource: GitDataSourceImpl
+    ): GitDataSource
 
 
     @InstallIn(SingletonComponent::class)
