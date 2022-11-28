@@ -1,11 +1,16 @@
 package com.kakaovx.practice.networkmodule.usecase
 
-import com.kakaovx.practice.network.ApiResponse
-import com.kakaovx.practice.networkmodule.model.UserInfoResponse
+import com.kakaovx.practice.networkmodule.di.IoDispatcher
+import com.kakaovx.practice.networkmodule.model.TestUserInfoResponse
+import com.kakaovx.practice.networkmodule.network.TestServerApiResponse
 import com.kakaovx.practice.networkmodule.repository.GitRepository
+import kotlinx.coroutines.CoroutineDispatcher
+import javax.inject.Inject
 
-class GetUserListUseCase(private val gitRepository: GitRepository) {
-    suspend operator fun invoke(): ApiResponse<List<UserInfoResponse>> {
-        return gitRepository.getUserList()
-    }
+class GetUserListUseCase @Inject constructor(
+    private val gitRepository: GitRepository,
+    @IoDispatcher dispatcher: CoroutineDispatcher
+) : NonParamUseCase<TestServerApiResponse<List<TestUserInfoResponse>>>(dispatcher) {
+
+    override suspend fun execute() = gitRepository.getUserList()
 }
