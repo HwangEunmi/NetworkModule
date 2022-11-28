@@ -34,19 +34,23 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    buildToolsVersion '30.0.2'
 }
 
 dependencies {
     implementation project(":network")
 
+    implementation Dependencies.activityKtx
+    implementation Dependencies.fragmentKtx
     implementation Dependencies.viewModelKtx
+    implementation Dependencies.liveDataKtx
 
     implementation Dependencies.hilt
     kapt Dependencies.hiltCompiler
 
-    api platform(Dependencies.okhttpPlatform)
-    api Dependencies.okhttp
-    api Dependencies.okhttpLoggingInterceptor
+    implementation platform(Dependencies.okhttpPlatform)
+    implementation Dependencies.okhttp
+    implementation Dependencies.okhttpLoggingInterceptor
 
     implementation Dependencies.coroutineCore
     implementation Dependencies.coroutineAndroid

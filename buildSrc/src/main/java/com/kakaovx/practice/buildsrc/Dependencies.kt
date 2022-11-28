@@ -1,7 +1,10 @@
 package com.kakaovx.practice.buildsrc
 
 object Versions {
+    internal const val ACTIVITY_KTX = "1.6.1"
+    internal const val FRAGMENT_KTX = "1.5.4"
     internal const val VIEWMODEL_KTX = "2.5.1"
+    internal const val LIVEDATA_KTX = "2.6.0-alpha03"
     internal const val HILT = "2.44"
     internal const val RETROFIT = "2.9.0"
     internal const val OKHTTP = "4.10.0"
@@ -9,7 +12,10 @@ object Versions {
 }
 
 object Dependencies {
+    const val activityKtx = "androidx.activity:activity-ktx:${Versions.ACTIVITY_KTX}"
+    const val fragmentKtx = "androidx.fragment:fragment-ktx:${Versions.FRAGMENT_KTX}"
     const val viewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.VIEWMODEL_KTX}"
+    const val liveDataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.LIVEDATA_KTX}"
 
     const val hilt = "com.google.dagger:hilt-android:${Versions.HILT}"
     const val hiltCompiler = "com.google.dagger:hilt-compiler:${Versions.HILT}"
