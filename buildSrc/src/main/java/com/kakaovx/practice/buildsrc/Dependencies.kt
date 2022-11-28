@@ -27,4 +27,5 @@ object Dependencies {
     const val coroutineAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.COROUTINE}"
 
     const val ktlint = "org.jlleitschuh.gradle.ktlint"
+    const val detekt = "io.gitlab.arturbosch.detekt"
 }
