@@ -1,13 +1,19 @@
 package com.kakaovx.practice.networkmodule.usecase
 
-import com.kakaovx.practice.network.ApiResponse
-import com.kakaovx.practice.networkmodule.model.UserInfoResponse
+import android.util.Log
+import com.kakaovx.practice.networkmodule.di.IoDispatcher
+import com.kakaovx.practice.networkmodule.model.TestUserInfoResponse
+import com.kakaovx.practice.networkmodule.network.TestServerApiResponse
 import com.kakaovx.practice.networkmodule.repository.GitRepository
+import kotlinx.coroutines.CoroutineDispatcher
+import javax.inject.Inject
 
-class GetUserInfoUseCase(private val gitRepository: GitRepository) {
-    suspend operator fun invoke(params: Params): ApiResponse<UserInfoResponse> {
-        return gitRepository.getUserInfo(params.username)
-    }
+class GetUserInfoUseCase @Inject constructor(
+    private val gitRepository: GitRepository,
+    @IoDispatcher dispatcher: CoroutineDispatcher
+) : ParamUseCase<GetUserInfoUseCase.Params, TestServerApiResponse<TestUserInfoResponse>>(dispatcher) {
+
+    override suspend fun execute(param: Params) = gitRepository.getUserInfo(param.username)
 
     data class Params(
         val username: String
