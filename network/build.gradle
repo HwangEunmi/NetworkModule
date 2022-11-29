@@ -3,6 +3,8 @@ import com.kakaovx.practice.buildsrc.Dependencies
 plugins {
     id 'java-library'
     id 'org.jetbrains.kotlin.jvm'
+    id 'org.jlleitschuh.gradle.ktlint'
+    id 'io.gitlab.arturbosch.detekt'
 }
 
 java {
