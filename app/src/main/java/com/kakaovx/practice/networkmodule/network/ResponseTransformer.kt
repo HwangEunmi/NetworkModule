@@ -1,5 +1,12 @@
 package com.kakaovx.practice.networkmodule.network
 
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flowOn
+
 /**
  * @author Jinny
  * 요청이 성공할 경우 성공적인 응답을 처리하기 위해 실행되는 함수
@@ -115,9 +122,40 @@ suspend inline fun <T> TestServerApiResponse<T>.suspendOnException(
         onResult(this)
     }
     return this
-}/**
+}
+
+/**
  * @author Jinny
  * 응답을 Flow 형태로 변환하는 함수
  * @return Flow 형태의 Response
  */
 fun <T> TestServerApiResponse<T>.toFlow(): Flow<TestServerApiResponse<T>> = flowOf(this)
+
+/**
+ * @author Jinny
+ * 다수의 Flow API를 조합하여 결과를 리턴하는 함수
+ *
+ * @param apiFlows : Flow형태의 API 함수
+ * @param onResult : 조합 결과 Response를 리턴하는 콜백함수
+ * [Boolean]은 통신 결과를 나타낸다.
+ * [Array]는 Response 묶음 배열을 나타낸다.
+ */
+suspend fun <T> combines(
+    vararg apiFlows: Flow<TestServerApiResponse<T>>,
+    dispatcher: CoroutineDispatcher,
+    onSuccessResult: suspend Array<TestServerApiResponse<T>>.() -> Unit,
+    onFailResult: suspend TestServerApiResponse<T>.() -> Unit
+
+) {
+    combine(*apiFlows) { arrays: Array<TestServerApiResponse<T>> ->
+        arrays.forEach { dataOfArray ->
+            if (dataOfArray is TestServerApiResponse.Failure) {
+                onFailResult(dataOfArray)
+                return@combine
+            }
+        }
+
+        onSuccessResult(arrays)
+    }.flowOn(dispatcher)
+        .collect()
+}
