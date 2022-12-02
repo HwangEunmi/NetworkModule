@@ -1,5 +1,6 @@
 package com.kakaovx.practice.networkmodule.network
 
+import com.kakaovx.practice.network.RequestInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,9 +18,7 @@ object NetworkModule {
     @Singleton
     fun provideOkHttpClient(): OkHttpClient =
         OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor().apply {
-                setLevel(HttpLoggingInterceptor.Level.BASIC)
-            })
+            .addInterceptor(RequestInterceptor())
             .build()
 
     @Provides
