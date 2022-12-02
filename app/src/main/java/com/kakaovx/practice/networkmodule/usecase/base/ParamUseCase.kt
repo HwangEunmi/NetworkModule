@@ -1,4 +1,4 @@
-package com.kakaovx.practice.networkmodule.usecase
+package com.kakaovx.practice.networkmodule.usecase.base
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
