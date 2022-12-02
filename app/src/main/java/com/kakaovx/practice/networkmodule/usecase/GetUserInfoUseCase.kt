@@ -1,10 +1,10 @@
 package com.kakaovx.practice.networkmodule.usecase
 
-import android.util.Log
 import com.kakaovx.practice.networkmodule.di.IoDispatcher
 import com.kakaovx.practice.networkmodule.model.TestUserInfoResponse
 import com.kakaovx.practice.networkmodule.network.TestServerApiResponse
 import com.kakaovx.practice.networkmodule.repository.GitRepository
+import com.kakaovx.practice.networkmodule.usecase.base.ParamUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
 

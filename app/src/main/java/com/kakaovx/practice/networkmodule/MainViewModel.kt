@@ -1,9 +1,14 @@
 package com.kakaovx.practice.networkmodule
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.kakaovx.practice.networkmodule.base.BaseViewModel
+import com.kakaovx.practice.networkmodule.model.CombineUserInfoResponse
 import com.kakaovx.practice.networkmodule.model.TestUserInfoResponse
+import com.kakaovx.practice.networkmodule.model.TestUserListResponse
+import com.kakaovx.practice.networkmodule.network.TestServerApiResponse
+import com.kakaovx.practice.networkmodule.usecase.GetUserCombineUseCase
 import com.kakaovx.practice.networkmodule.usecase.GetUserInfoUseCase
 import com.kakaovx.practice.networkmodule.usecase.GetUserListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,7 +17,8 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val getUserInfoUseCase: GetUserInfoUseCase,
-    private val getUserListUseCase: GetUserListUseCase
+    private val getUserListUseCase: GetUserListUseCase,
+    private val getUserCombineUseCase: GetUserCombineUseCase
 ) : BaseViewModel() {
 
     val userInfoData: LiveData<TestUserInfoResponse> = liveData(context) {
@@ -26,5 +32,15 @@ class MainViewModel @Inject constructor(
         getUserListUseCase().suspendOperator {
             emit(it.data)
         }
+    }
+
+    val userCombineData: LiveData<CombineUserInfoResponse> = liveData(context) {
+        getUserCombineUseCase(GetUserCombineUseCase.Params("octocat"), resultCallback = { it ->
+            if (it is TestServerApiResponse<*>) {
+                it.suspendOperator {
+                    emit(it.data as CombineUserInfoResponse)
+                }
+            }
+        })
     }
 }

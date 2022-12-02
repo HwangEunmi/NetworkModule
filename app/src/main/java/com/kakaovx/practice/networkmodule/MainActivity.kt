@@ -30,6 +30,10 @@ class MainActivity : AppCompatActivity() {
         viewModel.userListData.observe(this) {
             Log.d("debug", "userListData => $it")
         }
+
+        viewModel.userCombineData.observe(this) {
+            Log.d("debug", "userCombineData => $it")
+        }
     }
 
     // 각 Fragment의 onCreate에서 호출하기
