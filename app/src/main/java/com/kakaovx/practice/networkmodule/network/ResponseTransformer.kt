@@ -21,7 +21,7 @@ inline fun <T> ServerApiResponse<T>.onSuccess(
  * @param onResult :요청 성공시 ApiResponse.Success를 수신하는 리시버
  * @return The original [ServerApiResponse]
  */
-// suspend inline fun <T> ServerApiResponse<T>.suspendOnSuccess(
+// private suspend inline fun <T> ServerApiResponse<T>.suspendOnSuccess(
 //     crossinline onResult: suspend ServerApiResponse.Success<T>.() -> Unit
 // ): ServerApiResponse<T> {
 //     if (this is ServerApiResponse.Success) {
@@ -60,7 +60,7 @@ inline fun <T> ServerApiResponse<T>.onError(
  * @param onResult : 요청 실패시 ApiResponse.Failure.Error를 수신하는 리시버
  * @return The original [ServerApiResponse]
  */
-// suspend inline fun <T> ServerApiResponse<T>.suspendOnError(
+// private suspend inline fun <T> ServerApiResponse<T>.suspendOnError(
 //     crossinline onResult: suspend ServerApiResponse.Failure.Error<T>.() -> Unit
 // ): ServerApiResponse<T> {
 //     if (this is ServerApiResponse.Failure.Error) {
@@ -99,7 +99,7 @@ inline fun <T> ServerApiResponse<T>.onException(
  * @param onResult : 요청 실패시 ApiResponse.Failure.Exception을 수신하는 리시버
  * @return The original [ServerApiResponse]
  */
-// suspend inline fun <T> ServerApiResponse<T>.suspendOnException(
+// private suspend inline fun <T> ServerApiResponse<T>.suspendOnException(
 //     crossinline onResult: suspend ServerApiResponse.Failure.Exception<T>.() -> Unit
 // ): ServerApiResponse<T> {
 //     if (this is ServerApiResponse.Failure.Exception) {
