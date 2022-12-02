@@ -115,4 +115,9 @@ suspend inline fun <T> TestServerApiResponse<T>.suspendOnException(
         onResult(this)
     }
     return this
-}
+}/**
+ * @author Jinny
+ * 응답을 Flow 형태로 변환하는 함수
+ * @return Flow 형태의 Response
+ */
+fun <T> TestServerApiResponse<T>.toFlow(): Flow<TestServerApiResponse<T>> = flowOf(this)
