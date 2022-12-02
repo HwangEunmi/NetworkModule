@@ -22,4 +22,10 @@ data class TestUserInfoResponse(
     val login: String,
     override val id: Int,
     val avatar_url: String
-): ITestServerResponse
+) : ITestServerResponse
+
+data class TestUserListResponse(
+    val login: String,
+    override val id: Int,
+    val avatar_url: String
+) : ITestServerResponse

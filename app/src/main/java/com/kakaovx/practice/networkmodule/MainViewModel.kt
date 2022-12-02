@@ -22,7 +22,7 @@ class MainViewModel @Inject constructor(
             }
     }
 
-    val userListData: LiveData<List<TestUserInfoResponse>> = liveData(context) {
+    val userListData: LiveData<List<TestUserListResponse>> = liveData(context) {
         getUserListUseCase().suspendOperator {
             emit(it.data)
         }

@@ -56,7 +56,6 @@ open class TestServerApiResponse<out T> {
                             errorCode = getStatusCodeFromApiCode("XXXX")
                         )
                     }
-
                     Success(response.data)
                 }
 

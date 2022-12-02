@@ -2,6 +2,7 @@ package com.kakaovx.practice.networkmodule.datasource
 
 import com.kakaovx.practice.network.HttpApiResponse
 import com.kakaovx.practice.networkmodule.model.TestUserInfoResponse
+import com.kakaovx.practice.networkmodule.model.TestUserListResponse
 import com.kakaovx.practice.networkmodule.network.GithubApi
 import javax.inject.Inject
 
@@ -13,7 +14,7 @@ class GitDataSourceImpl @Inject constructor(
         return HttpApiResponse.of { result }
     }
 
-    override suspend fun getUserList(): HttpApiResponse<List<TestUserInfoResponse>> {
+    override suspend fun getUserList(): HttpApiResponse<List<TestUserListResponse>> {
         val result = githubApi.getUserList()
         return HttpApiResponse.of { result }
     }
