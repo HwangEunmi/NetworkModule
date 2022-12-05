@@ -20,8 +20,7 @@ class GetUserCombineUseCase @Inject constructor(
     @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) : CombineParamUseCase<GetUserCombineUseCase.Params>() {
 
-    // TODO : 개선할 수 있는 방법 생각해보기
-    override suspend fun execute(param: Params, resultCallback: suspend (Any) -> Unit) {
+    override suspend fun execute(param: Params): Any {
         val userInfo = gitRepository.getUserInfo(param.username).toFlow()
         val userList = gitRepository.getUserList().toFlow()
 
@@ -40,7 +39,7 @@ class GetUserCombineUseCase @Inject constructor(
                 }
 
                 whenAllNotNull(testUserInfoResponse, testUserListResponse,
-                    block = {
+                    notNullBlock = {
                         resultCallback(
                             TestServerApiResponse.Success(
                                 CombineUserInfoResponse(
@@ -49,7 +48,7 @@ class GetUserCombineUseCase @Inject constructor(
                                 )
                             )
                         )
-                    }, notBlock = {
+                    }, nullBlock = {
                         // TODO : 무슨 에러로 정의할지 생각해보기
                         resultCallback(
                             TestServerApiResponse.Failure.Error<CombineUserInfoResponse>(
@@ -63,6 +62,8 @@ class GetUserCombineUseCase @Inject constructor(
             onFailResult = {
                 resultCallback(this)
             })
+
+        return combineResult
     }
 
     data class Params(
