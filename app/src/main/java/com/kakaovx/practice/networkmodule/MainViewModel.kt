@@ -1,6 +1,5 @@
 package com.kakaovx.practice.networkmodule
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.kakaovx.practice.networkmodule.base.BaseViewModel
@@ -35,12 +34,9 @@ class MainViewModel @Inject constructor(
     }
 
     val userCombineData: LiveData<CombineUserInfoResponse> = liveData(context) {
-        getUserCombineUseCase(GetUserCombineUseCase.Params("octocat"), resultCallback = { it ->
-            if (it is TestServerApiResponse<*>) {
-                it.suspendOperator {
-                    emit(it.data as CombineUserInfoResponse)
-                }
+        getUserCombineUseCase(GetUserCombineUseCase.Params("octocat"))
+            .combineSuspendOperator {
+                emit(it.data as CombineUserInfoResponse)
             }
-        })
     }
 }

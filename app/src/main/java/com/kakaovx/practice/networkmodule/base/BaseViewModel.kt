@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kakaovx.practice.network.constant.ExceptionStatusCode
 import com.kakaovx.practice.network.constant.StatusCode
-import com.kakaovx.practice.networkmodule.network.ServerApiResponse
 import com.kakaovx.practice.networkmodule.network.TestServerApiResponse
 import com.kakaovx.practice.networkmodule.network.constant.ServerStatusCode
 import com.kakaovx.practice.networkmodule.network.suspendOnError
@@ -30,22 +29,7 @@ open class BaseViewModel : ViewModel() {
 
     protected val context = Dispatchers.Main.immediate + job + exceptionHandler
 
-    // suspend fun <T> ServerApiResponse<T>.suspendOperator(
-    //     success: suspend (ServerApiResponse.Success<T>) -> Unit
-    // ) {
-    //     this.suspendOnSuccess {
-    //         Log.d("debug", this.toString())
-    //         success(this)
-    //     }.suspendOnError {
-    //         Log.d("debug", this.toString())
-    //         _sideEffect.value = Event(this.errorCode)
-    //     }.suspendOnException {
-    //         Log.d("debug", this.toString())
-    //         _sideEffect.value = Event(ServerStatusCode.HttpError)
-    //     }
-    // }
-
-    suspend fun <T> TestServerApiResponse<T>.suspendOperator(
+    protected suspend fun <T> TestServerApiResponse<T>.suspendOperator(
         success: suspend (TestServerApiResponse.Success<T>) -> Unit
     ) {
         this.suspendOnSuccess {
@@ -57,6 +41,16 @@ open class BaseViewModel : ViewModel() {
         }.suspendOnException {
             Log.d("debug", this.toString())
             _sideEffect.value = Event(ServerStatusCode.HttpError)
+        }
+    }
+
+    protected suspend inline fun Any.combineSuspendOperator(
+        crossinline callback: suspend (TestServerApiResponse.Success<Any?>) -> Unit
+    ) {
+        if (this is TestServerApiResponse<*>) {
+            this.suspendOperator { success ->
+                callback(success)
+            }
         }
     }
 }
