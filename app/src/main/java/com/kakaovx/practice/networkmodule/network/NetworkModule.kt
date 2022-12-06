@@ -1,14 +1,13 @@
 package com.kakaovx.practice.networkmodule.network
 
+import com.kakaovx.practice.network.ConverterTypeFactory
 import com.kakaovx.practice.network.RequestInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
@@ -26,6 +25,6 @@ object NetworkModule {
     fun provideRetrofit(): Retrofit =
         Retrofit.Builder()
             .baseUrl("https://api.github.com")
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(ConverterTypeFactory())
             .build()
 }
