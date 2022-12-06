@@ -2,8 +2,6 @@ package com.kakaovx.practice.networkmodule.repository
 
 import com.kakaovx.practice.networkmodule.model.TestUserInfoResponse
 import com.kakaovx.practice.networkmodule.model.TestUserListResponse
-import com.kakaovx.practice.networkmodule.model.UserInfoResponse
-import com.kakaovx.practice.networkmodule.network.ServerApiResponse
 import com.kakaovx.practice.networkmodule.network.TestServerApiResponse
 
 interface GitRepository {

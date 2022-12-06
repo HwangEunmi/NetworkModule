@@ -7,9 +7,7 @@ import com.kakaovx.practice.networkmodule.model.TestUserListResponse
 import com.kakaovx.practice.networkmodule.model.UserInfoResponse
 
 interface GitDataSource {
-    // suspend fun getUserInfo(username: String): HttpApiResponse<IHttpResponse<UserInfoResponse>>
     suspend fun getUserInfo(username: String): HttpApiResponse<TestUserInfoResponse>
 
-    // suspend fun getUserList(): HttpApiResponse<IHttpResponse<List<UserInfoResponse>>>
     suspend fun getUserList(): HttpApiResponse<List<TestUserListResponse>>
 }

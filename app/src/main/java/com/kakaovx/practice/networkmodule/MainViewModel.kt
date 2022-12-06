@@ -6,7 +6,6 @@ import com.kakaovx.practice.networkmodule.base.BaseViewModel
 import com.kakaovx.practice.networkmodule.model.CombineUserInfoResponse
 import com.kakaovx.practice.networkmodule.model.TestUserInfoResponse
 import com.kakaovx.practice.networkmodule.model.TestUserListResponse
-import com.kakaovx.practice.networkmodule.network.TestServerApiResponse
 import com.kakaovx.practice.networkmodule.usecase.GetUserCombineUseCase
 import com.kakaovx.practice.networkmodule.usecase.GetUserInfoUseCase
 import com.kakaovx.practice.networkmodule.usecase.GetUserListUseCase

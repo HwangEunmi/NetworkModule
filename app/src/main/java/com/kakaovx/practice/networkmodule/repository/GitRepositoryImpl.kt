@@ -3,8 +3,6 @@ package com.kakaovx.practice.networkmodule.repository
 import com.kakaovx.practice.networkmodule.datasource.GitDataSource
 import com.kakaovx.practice.networkmodule.model.TestUserInfoResponse
 import com.kakaovx.practice.networkmodule.model.TestUserListResponse
-import com.kakaovx.practice.networkmodule.model.UserInfoResponse
-import com.kakaovx.practice.networkmodule.network.ServerApiResponse
 import com.kakaovx.practice.networkmodule.network.TestServerApiResponse
 import javax.inject.Inject
 
