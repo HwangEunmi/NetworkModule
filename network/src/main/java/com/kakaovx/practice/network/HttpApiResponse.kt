@@ -24,7 +24,7 @@ open class HttpApiResponse<out T> {
     data class Success<T>(val response: Response<T>) : HttpApiResponse<T>() {
         val statusCode: HttpStatusCode = getStatusCodeFromResponse(response)
         val headers: Headers = response.headers()
-        val data: T by lazy { response.body() ?: throw NoContentException(statusCode.code) }
+        val data: T by lazy { response.body() ?: throw  NoContentException(statusCode.code) }
         override fun toString(): String = "[HttpApiResponse.Success](data=$data)"
     }
 
