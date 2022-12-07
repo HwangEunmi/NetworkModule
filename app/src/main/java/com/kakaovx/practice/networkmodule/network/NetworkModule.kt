@@ -1,7 +1,6 @@
 package com.kakaovx.practice.networkmodule.network
 
 import com.kakaovx.practice.network.ConverterTypeFactory
-import com.kakaovx.practice.network.RequestInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,5 +25,6 @@ object NetworkModule {
         Retrofit.Builder()
             .baseUrl("https://api.github.com")
             .addConverterFactory(ConverterTypeFactory())
+            .client(provideOkHttpClient())
             .build()
 }
