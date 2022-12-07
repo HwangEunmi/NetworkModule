@@ -36,9 +36,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // 각 Fragment의 onCreate에서 호출하기
-    fun BaseViewModel.handleNetworkSideEffect() {
+    // 각 Fragment가 아닌 Single Activity에서 콜백받기
+    // 추후에 Dialog로 할때는 에러 팝업 딱 하나만 띄울 수 있도록 isShowing으로 관리하기
+    private fun BaseViewModel.handleNetworkSideEffect() {
         newObserveNetwork(EventObserver(EventUnhandledContent) { result ->
+            Log.d("debug", "Call Toast")
             Toast.makeText(this@MainActivity, result, Toast.LENGTH_SHORT).show()
         })
     }
