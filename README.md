@@ -7,12 +7,11 @@
 - 인터넷(LTE, Wifi)가 연결되어있지 않은 상태에서 API를 호출할 경우의 에러를 처리합니다. (0)
 - Local Cache를 사용합니다. (Room)
 - DSL을 사용하여 Gradle을 깔끔하게 유지합니다. 
+- Timeout Exception이 발생할 경우 CoroutineExceptionHandler로 잡을 수 있습니다. (0)
 <br/>
 
 🔍 로딩시 어떤 UI가 대세인지 찾아보기 (ex. 프로그래스바)
 <br/>
 ❓ API 호출 실패시 재시도하는것도 만들어야되는지? 
-<br/>
-✔️ Timeout Exception 발생할 경우 어떻게 되는지 확인하기 
 <br/>
 🔍 통신모듈 테스트할 수 있는 기법 찾아보기 
