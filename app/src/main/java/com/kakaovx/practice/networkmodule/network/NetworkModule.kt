@@ -7,6 +7,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
@@ -16,6 +17,9 @@ object NetworkModule {
     @Singleton
     fun provideOkHttpClient(): OkHttpClient =
         OkHttpClient.Builder()
+            .connectTimeout(20, TimeUnit.SECONDS) // default value : 10
+            .readTimeout(20, TimeUnit.SECONDS) // default value : 10
+            .writeTimeout(20, TimeUnit.SECONDS) // default value : 10
             .addInterceptor(RequestInterceptor())
             .build()
 
