@@ -9,6 +9,7 @@ object Versions {
     internal const val RETROFIT = "2.9.0"
     internal const val OKHTTP = "4.10.0"
     internal const val COROUTINE = "1.6.4"
+    internal const val LIFECYCLE = "2.5.1"
 }
 
 object Dependencies {
@@ -31,4 +32,6 @@ object Dependencies {
 
     const val coroutineCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.COROUTINE}"
     const val coroutineAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.COROUTINE}"
+
+    const val lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.LIFECYCLE}"
 }
