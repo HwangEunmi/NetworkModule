@@ -1,3 +1,3 @@
 package com.kakaovx.practice.network.model
 
-interface IHttpResponse<T>
+interface IHttpResponse<out T>
