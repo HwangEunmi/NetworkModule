@@ -7,13 +7,15 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 
+// TODO : inline 함수랑 reified 사용 여부 생각해보기 (+ out 키워드도)
+
 /**
  * @author Jinny
  * 요청이 성공할 경우 성공적인 응답을 처리하기 위해 실행되는 함수
  * @param onResult : 요청 성공시 ApiResponse.Success를 수신하는 리시버
  * @return The original [ServerApiResponse]
  */
-inline fun <T> ServerApiResponse<T>.onSuccess(
+internal inline fun <T: Any> ServerApiResponse<T>.onSuccess(
     crossinline onResult: ServerApiResponse.Success<T>.() -> Unit
 ): ServerApiResponse<T> {
     if (this is ServerApiResponse.Success) {
@@ -28,7 +30,7 @@ inline fun <T> ServerApiResponse<T>.onSuccess(
  * @param onResult :요청 성공시 ApiResponse.Success를 수신하는 리시버
  * @return The original [ServerApiResponse]
  */
-// private suspend inline fun <T> ServerApiResponse<T>.suspendOnSuccess(
+// private suspend inline fun <T: Any> ServerApiResponse<T>.suspendOnSuccess(
 //     crossinline onResult: suspend ServerApiResponse.Success<T>.() -> Unit
 // ): ServerApiResponse<T> {
 //     if (this is ServerApiResponse.Success) {
@@ -37,7 +39,7 @@ inline fun <T> ServerApiResponse<T>.onSuccess(
 //     return this
 // }
 
-suspend inline fun <T> TestServerApiResponse<T>.suspendOnSuccess(
+internal suspend inline fun <T> TestServerApiResponse<T>.suspendOnSuccess(
     crossinline onResult: suspend TestServerApiResponse.Success<T>.() -> Unit
 ): TestServerApiResponse<T> {
     if (this is TestServerApiResponse.Success) {
@@ -52,7 +54,7 @@ suspend inline fun <T> TestServerApiResponse<T>.suspendOnSuccess(
  * @param onResult : 요청 실패시 ApiResponse.Failure.Error를 수신하는 리시버
  * @return The original [ServerApiResponse]
  */
-inline fun <T> ServerApiResponse<T>.onError(
+internal inline fun <T> ServerApiResponse<T>.onError(
     crossinline onResult: ServerApiResponse.Failure.Error<T>.() -> Unit
 ): ServerApiResponse<T> {
     if (this is ServerApiResponse.Failure.Error) {
@@ -67,7 +69,7 @@ inline fun <T> ServerApiResponse<T>.onError(
  * @param onResult : 요청 실패시 ApiResponse.Failure.Error를 수신하는 리시버
  * @return The original [ServerApiResponse]
  */
-// private suspend inline fun <T> ServerApiResponse<T>.suspendOnError(
+// private suspend inline fun <T: Any> ServerApiResponse<T>.suspendOnError(
 //     crossinline onResult: suspend ServerApiResponse.Failure.Error<T>.() -> Unit
 // ): ServerApiResponse<T> {
 //     if (this is ServerApiResponse.Failure.Error) {
@@ -76,7 +78,7 @@ inline fun <T> ServerApiResponse<T>.onError(
 //     return this
 // }
 
-suspend inline fun <T> TestServerApiResponse<T>.suspendOnError(
+internal suspend inline fun <T> TestServerApiResponse<T>.suspendOnError(
     crossinline onResult: suspend TestServerApiResponse.Failure.Error<T>.() -> Unit
 ): TestServerApiResponse<T> {
     if (this is TestServerApiResponse.Failure.Error) {
@@ -91,7 +93,7 @@ suspend inline fun <T> TestServerApiResponse<T>.suspendOnError(
  * @param onResult : 요청 실패시 ApiResponse.Failure.Exception을 수신하는 리시버
  * @return The original [ServerApiResponse]
  */
-inline fun <T> ServerApiResponse<T>.onException(
+internal inline fun <T> ServerApiResponse<T>.onException(
     crossinline onResult: ServerApiResponse.Failure.Exception<T>.() -> Unit
 ): ServerApiResponse<T> {
     if (this is ServerApiResponse.Failure.Exception) {
@@ -106,7 +108,7 @@ inline fun <T> ServerApiResponse<T>.onException(
  * @param onResult : 요청 실패시 ApiResponse.Failure.Exception을 수신하는 리시버
  * @return The original [ServerApiResponse]
  */
-// private suspend inline fun <T> ServerApiResponse<T>.suspendOnException(
+// private suspend inline fun <T: Any> ServerApiResponse<T>.suspendOnException(
 //     crossinline onResult: suspend ServerApiResponse.Failure.Exception<T>.() -> Unit
 // ): ServerApiResponse<T> {
 //     if (this is ServerApiResponse.Failure.Exception) {
@@ -115,7 +117,7 @@ inline fun <T> ServerApiResponse<T>.onException(
 //     return this
 // }
 
-suspend inline fun <T> TestServerApiResponse<T>.suspendOnException(
+internal suspend inline fun <T> TestServerApiResponse<T>.suspendOnException(
     crossinline onResult: suspend TestServerApiResponse.Failure.Exception<T>.() -> Unit
 ): TestServerApiResponse<T> {
     if (this is TestServerApiResponse.Failure.Exception) {
@@ -129,7 +131,7 @@ suspend inline fun <T> TestServerApiResponse<T>.suspendOnException(
  * 응답을 Flow 형태로 변환하는 함수
  * @return Flow 형태의 Response
  */
-fun <T> TestServerApiResponse<T>.toFlow(): Flow<TestServerApiResponse<T>> = flowOf(this)
+internal fun <T: Any> TestServerApiResponse<T>.toFlow(): Flow<TestServerApiResponse<T>> = flowOf(this)
 
 /**
  * @author Jinny
@@ -140,7 +142,7 @@ fun <T> TestServerApiResponse<T>.toFlow(): Flow<TestServerApiResponse<T>> = flow
  * [Boolean]은 통신 결과를 나타낸다.
  * [Array]는 Response 묶음 배열을 나타낸다.
  */
-suspend fun <T> combines(
+internal suspend fun <T: Any> combines(
     vararg apiFlows: Flow<TestServerApiResponse<T>>,
     dispatcher: CoroutineDispatcher,
     onSuccessResult: suspend Array<TestServerApiResponse<T>>.() -> Unit,
@@ -158,4 +160,16 @@ suspend fun <T> combines(
         onSuccessResult(arrays)
     }.flowOn(dispatcher)
         .collect()
+}
+
+/**
+ * @author Jinny
+ * 해당 API를 다시 호출하는 함수
+ *
+ * @param block : 호출해야 할 API
+ */
+internal suspend fun <T: Any> retryIO(
+    block: suspend () -> T
+): T {
+    return block()
 }
