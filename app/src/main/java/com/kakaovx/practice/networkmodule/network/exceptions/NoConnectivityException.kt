@@ -1,4 +1,4 @@
-package com.kakaovx.practice.networkmodule.network.constant
+package com.kakaovx.practice.networkmodule.network.exceptions
 
 import java.io.IOException
 

@@ -1,6 +1,8 @@
-package com.kakaovx.practice.networkmodule.network
+package com.kakaovx.practice.networkmodule.network.di
 
 import com.kakaovx.practice.network.ConverterTypeFactory
+import com.kakaovx.practice.networkmodule.network.AddHeaderInterceptor
+import com.kakaovx.practice.networkmodule.network.TokenAuthenticator
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,7 +14,13 @@ import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-object NetworkModule {
+internal object NetworkModule {
+
+    @Provides
+    @Singleton
+    fun provideTokenAuthenticator(): TokenAuthenticator =
+        TokenAuthenticator(RepositoryModule.ProvideModule.provideTokenRepository())
+
     @Provides
     @Singleton
     fun provideOkHttpClient(): OkHttpClient =
@@ -20,7 +28,8 @@ object NetworkModule {
             .connectTimeout(20, TimeUnit.SECONDS) // default value : 10
             .readTimeout(20, TimeUnit.SECONDS) // default value : 10
             .writeTimeout(20, TimeUnit.SECONDS) // default value : 10
-            .addInterceptor(RequestInterceptor())
+            .authenticator(provideTokenAuthenticator())
+            .addNetworkInterceptor(AddHeaderInterceptor())
             .build()
 
     @Provides

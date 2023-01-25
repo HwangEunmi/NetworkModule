@@ -6,7 +6,7 @@ package com.kakaovx.practice.network.constant
  * [TYPE_HTTP_ERROR]은 HTTP 통신 에러다.
  * [TYPE_SERVER_ERROR]은 API 통신 에러다.
  */
-enum class ApiErrorType {
+enum class ErrorType {
     TYPE_HTTP_ERROR,
     TYPE_SERVER_ERROR
 }

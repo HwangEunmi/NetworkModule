@@ -1,8 +1,8 @@
 package com.kakaovx.practice.network
 
+import com.kakaovx.practice.network.constant.HTTP_SUCCESS_RANGE_CODE
 import com.kakaovx.practice.network.constant.HttpStatusCode
 import com.kakaovx.practice.network.exceptions.NoContentException
-import com.kakaovx.practice.network.model.IHttpResponse
 import okhttp3.Headers
 import okhttp3.ResponseBody
 import retrofit2.Response
@@ -74,8 +74,8 @@ open class HttpApiResponse<out T> {
          * 만약 [retrofit2.Response]가 오류를 가지면, [HttpApiResponse.Failure.Error]를 생성한다.
          * 만약 [retrofit2.Response]에서 예외를 발생하면, [HttpApiResponse.Failure.Exception]를 생성한다.
          */
-        inline fun <T> of(
-            successCodeRange: IntRange = HTTP_SUCCESS_CODE_RANGE,
+        inline fun <T: Any> of(
+            successCodeRange: IntRange = HTTP_SUCCESS_RANGE_CODE,
             crossinline f: () -> Response<T>
         ): HttpApiResponse<T> = try {
             val response = f()
