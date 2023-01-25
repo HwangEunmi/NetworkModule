@@ -63,9 +63,9 @@ class MainStateFlowActivity : AppCompatActivity() {
                     }
 
                 // TODO : LiveData는 background -> foreground 시 어떻게 동작하는지 확인하기 (distinctUntilChanged 도 해보기)
-                viewModel.test.asLiveData().observe() {
-
-                }
+                // viewModel.test.asLiveData().observe() {
+                //
+                // }
             }
             lifecycleScope.launchWhenStarted {
                 // launch {
