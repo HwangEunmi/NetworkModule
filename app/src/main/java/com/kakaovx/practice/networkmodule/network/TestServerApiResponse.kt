@@ -1,8 +1,7 @@
 package com.kakaovx.practice.networkmodule.network
 
 import com.kakaovx.practice.network.HttpApiResponse
-import com.kakaovx.practice.network.constant.ApiErrorType
-import com.kakaovx.practice.network.constant.StatusCode
+import com.kakaovx.practice.network.constant.ErrorType
 import com.kakaovx.practice.networkmodule.network.constant.ServerStatusCode
 import com.kakaovx.practice.networkmodule.network.model.ITestServerResponse
 
@@ -19,8 +18,8 @@ open class TestServerApiResponse<out T> {
 
     sealed class Failure<T> : TestServerApiResponse<T>() {
         data class Error<T>(
-            val errorType: ApiErrorType = ApiErrorType.TYPE_HTTP_ERROR,
-            val errorCode: StatusCode = ServerStatusCode.HttpError
+            val errorType: ErrorType = ErrorType.TYPE_HTTP_ERROR,
+            val errorCode: ServerStatusCode = ServerStatusCode.HttpError
         ) : Failure<T>() {
             override fun toString(): String = "[ServerApiResponse.Failure.Error-$errorType](errorCode=$errorCode)"
         }
@@ -42,31 +41,28 @@ open class TestServerApiResponse<out T> {
          *
          * HTTP 통신 성공/실패 구분값인 [HttpApiResponse]를 서버 성공/실패 구분값인 [TestServerApiResponse]로 변환한다.
          */
-        inline fun <T> of(
-            // successCode: String = SERVER_SUCCESS_CODE,
-            successCode: String? = null,
-            crossinline f: () -> HttpApiResponse<T>
-        ): TestServerApiResponse<T> {
-            val response = f()
-            return when (response) {
+        fun <T : Any> HttpApiResponse<T>.toServerFormat(): TestServerApiResponse<T> {
+            val response = this
+            when (response) {
                 is HttpApiResponse.Success -> {
                     if (response.data !is ITestServerResponse) {
-                        Failure.Error<T>(
-                            errorType = ApiErrorType.TYPE_SERVER_ERROR,
+                        return Failure.Error(
+                            errorType = ErrorType.TYPE_SERVER_ERROR,
                             errorCode = getStatusCodeFromApiCode("XXXX")
                         )
                     }
-                    Success(response.data)
+
+                    return Success(response.data)
                 }
 
                 is HttpApiResponse.Failure.Error ->
-                    Failure.Error(
-                        errorType = ApiErrorType.TYPE_HTTP_ERROR,
+                    return Failure.Error(
+                        errorType = ErrorType.TYPE_HTTP_ERROR,
                         errorCode = ServerStatusCode.HttpError
                     )
 
                 is HttpApiResponse.Failure.Exception ->
-                    Failure.Exception(response.exception)
+                    return Failure.Exception(response.exception)
 
                 else -> throw TypeCastException("This type is not expected.")
             }
@@ -78,8 +74,14 @@ open class TestServerApiResponse<out T> {
          * @param code : Api 상태코드
          * @return 서버 상태코드
          */
-        fun getStatusCodeFromApiCode(code: String): ServerStatusCode {
+        private fun getStatusCodeFromApiCode(code: String): ServerStatusCode {
             return ServerStatusCode.values().find { it.code == code } ?: ServerStatusCode.HttpError
         }
+
+        /**
+         * 토큰 만료 상태인지 확인한다.
+         */
+        private fun checkTokenExpire(code: String) =
+            (code == ServerStatusCode.TokenExpiration.code)
     }
 }

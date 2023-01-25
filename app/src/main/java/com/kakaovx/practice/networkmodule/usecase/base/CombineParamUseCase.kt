@@ -1,10 +1,10 @@
 package com.kakaovx.practice.networkmodule.usecase.base
 
-import com.kakaovx.practice.network.constant.ApiErrorType
+import com.kakaovx.practice.network.constant.ErrorType
 import com.kakaovx.practice.networkmodule.network.TestServerApiResponse
 import com.kakaovx.practice.networkmodule.network.constant.ServerStatusCode
 
-typealias ResultCallback = (Any) -> Unit
+private typealias ResultCallback = (Any) -> Unit
 
 abstract class CombineParamUseCase<in P> {
     suspend operator fun invoke(parameters: P): Any {
@@ -15,7 +15,7 @@ abstract class CombineParamUseCase<in P> {
     protected abstract suspend fun execute(param: P): Any
 
     protected var combineResult: Any = TestServerApiResponse.Failure.Error<Any>(
-        errorType = ApiErrorType.TYPE_SERVER_ERROR,
+        errorType = ErrorType.TYPE_SERVER_ERROR,
         errorCode = ServerStatusCode.HttpError
     )
 
