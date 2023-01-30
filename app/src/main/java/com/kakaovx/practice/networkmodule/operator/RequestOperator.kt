@@ -1,6 +1,7 @@
 package com.kakaovx.practice.networkmodule.operator
 
 import android.util.Log
+import com.kakaovx.practice.networkmodule.network.SideEffectEventCallback
 import com.kakaovx.practice.networkmodule.network.TestServerApiResponse
 import com.kakaovx.practice.networkmodule.network.suspendOnError
 import com.kakaovx.practice.networkmodule.network.suspendOnException
@@ -9,7 +10,6 @@ import com.kakaovx.practice.networkmodule.ui.constant.FailureState
 import com.kakaovx.practice.networkmodule.ui.constant.LoadingState
 import com.kakaovx.practice.networkmodule.ui.constant.State
 import com.kakaovx.practice.networkmodule.ui.constant.SuccessState
-import com.kakaovx.practice.networkmodule.ui.view.SideEffectEventCallback
 import com.kakaovx.practice.networkmodule.util.Event
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
