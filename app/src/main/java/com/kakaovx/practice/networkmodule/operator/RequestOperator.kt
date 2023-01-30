@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 
-suspend fun <T : Any> MutableStateFlow<State>.requestOperator(
+internal suspend fun <T : Any> MutableStateFlow<State>.requestOperator(
     onApi: suspend () -> TestServerApiResponse<T>,
     onSideEffectEvent: SideEffectEventCallback
 ) {
