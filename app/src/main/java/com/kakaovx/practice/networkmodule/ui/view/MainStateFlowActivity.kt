@@ -6,23 +6,17 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.kakaovx.practice.networkmodule.databinding.ActivityStateflowMainBinding
-import com.kakaovx.practice.networkmodule.model.TestUserInfoResponse
 import com.kakaovx.practice.networkmodule.network.LoadingHandleCallback
 import com.kakaovx.practice.networkmodule.network.NetworkResultObserver
-import com.kakaovx.practice.networkmodule.network.TestServerApiResponse
 import com.kakaovx.practice.networkmodule.ui.constant.LoadingState
 import com.kakaovx.practice.networkmodule.ui.constant.SideEffectType
 import com.kakaovx.practice.networkmodule.ui.view.base.BaseStateFlowViewModel
 import com.kakaovx.practice.networkmodule.util.EventObserver
 import com.kakaovx.practice.networkmodule.util.EventUnhandledContent
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -47,48 +41,23 @@ class MainStateFlowActivity : AppCompatActivity() {
     private fun initObserver() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.test
-                    // .map {
-                    // it.isRefresh
-                // }
-                //     .map {
-                //
-                //     }
-                //    .distinctUntilChanged()
-                    .collect {
-                        val value = it as TestServerApiResponse<TestUserInfoResponse>?
-                        value?.let {
-                            Log.d("THEEND", "value: $value")
-                        }
-                    }
-
-                // TODO : LiveData는 background -> foreground 시 어떻게 동작하는지 확인하기 (distinctUntilChanged 도 해보기)
-                // viewModel.test.asLiveData().observe() {
-                //
-                // }
-            }
-            lifecycleScope.launchWhenStarted {
-                // launch {
-                //     viewModel.userInfoTest.collect()
-                // }
                 launch {
-                    Log.d("THEEND", "Enter1")
-                    viewModel.userInfo.collect(
+                    viewModel.userInfoApiOperator.collect(
                         NetworkResultObserver(
                             loadingHandleCallback,
                             onSuccessCallback = {
-                                Log.d("THEEND", "Success userInfo: $it")
+                                Log.d("THEEND", "it: $it")
                             }
                         )
                     )
                 }
 
                 launch {
-                    viewModel.userCombine.collect(
+                    viewModel.userCombineApiOperator.collect(
                         NetworkResultObserver(
                             loadingHandleCallback,
                             onSuccessCallback = {
-                                Log.d("THEEND", "Success userCombine: $it")
+                                Log.d("THEEND", "it2: $it")
                             }
                         )
                     )

@@ -1,17 +1,21 @@
 package com.kakaovx.practice.networkmodule.ui.view
 
 import androidx.lifecycle.viewModelScope
-import com.kakaovx.practice.networkmodule.model.TestUserInfoResponse
-import com.kakaovx.practice.networkmodule.network.TestServerApiResponse
+import com.kakaovx.practice.networkmodule.operator.apiOperator
+import com.kakaovx.practice.networkmodule.operator.requestCombineOperator
+import com.kakaovx.practice.networkmodule.operator.requestOperator
+import com.kakaovx.practice.networkmodule.ui.constant.FailureState
+import com.kakaovx.practice.networkmodule.ui.constant.IdleState
+import com.kakaovx.practice.networkmodule.ui.constant.State
 import com.kakaovx.practice.networkmodule.ui.view.base.BaseStateFlowViewModel
 import com.kakaovx.practice.networkmodule.usecase.GetUserCombineUseCase
 import com.kakaovx.practice.networkmodule.usecase.GetUserInfoUseCase
 import com.kakaovx.practice.networkmodule.usecase.GetUserListUseCase
+import com.kakaovx.practice.networkmodule.util.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,51 +26,44 @@ class MainStateFlowViewModel @Inject constructor(
     private val getUserCombineUseCase: GetUserCombineUseCase
 ) : BaseStateFlowViewModel() {
 
-    val userInfo = requestOperator {
-        getUserInfoUseCase(GetUserInfoUseCase.Params("octocat"))
-    }
+    private val _userInfo = MutableStateFlow<State>(IdleState.Idle)
+    val userInfo: StateFlow<State> = _userInfo.asStateFlow()
 
-    val _test = MutableStateFlow<TestServerApiResponse<TestUserInfoResponse>?>(null)
-    val test: StateFlow<TestServerApiResponse<TestUserInfoResponse>?> = _test.asStateFlow()
+    private val _userCombine = MutableStateFlow<State>(IdleState.Idle)
+    val userCombine: StateFlow<State> = _userCombine.asStateFlow()
 
-    val userInfoTest = requestUserInfo()
-
-    private fun requestUserInfo() = requestOperator {
-        getUserInfoUseCase(GetUserInfoUseCase.Params("octocat"))
-    }
-
-    fun testCall() {
-        viewModelScope.launch {
-            val value = getUserInfoUseCase(GetUserInfoUseCase.Params("octocat"))
-            _test.update { value }
-        }
-        // _test
-        //     // .map { count -> count > 0 }
-        //     .map { !it.isRefresh }
-        //     .distinctUntilChanged()
-        //     .onEach { isActive ->
-        //         if (isActive) {
-        //            Log.d("THEEND", "Real Call")
-        //                TestModel(true, 1)
-        //         } else {
-        //             Log.d("THEEND", "Not Call")
-        //         }
-        //     }.launchIn(viewModelScope)
-    }
     init {
-        testCall()
+        viewModelScope.launch {
+            requestUserInfo()
+            requestUserCombine()
+        }
     }
 
-    data class TestModel(
-        val isRefresh: Boolean = false,
-        var num: Int = 0
-    )
+    private val sideEffectEventCallback = object : SideEffectEventCallback {
+        override fun invoke(event: Event<FailureState>) {
+            _sideEffect.value = event
+        }
+    }
+
+    val userInfoApiOperator = userInfo.apiOperator(sideEffectEventCallback)
+
+    val userCombineApiOperator = userCombine.apiOperator(sideEffectEventCallback)
+
     // TODO : 제발 재시도!!!!!!
-    val userList = callOperator {
-        getUserListUseCase()
-    }
+    private suspend fun requestUserInfo() = _userInfo.requestOperator(
+        onApi = {
+            getUserInfoUseCase(GetUserInfoUseCase.Params("octocat"))
+        },
+        onSideEffectEvent = sideEffectEventCallback,
+    )
 
-    val userCombine = requestCombineOperator {
-        getUserCombineUseCase(GetUserCombineUseCase.Params("octocat"))
-    }
+    private suspend fun requestUserCombine() = _userCombine.requestCombineOperator(
+        onApi = {
+            getUserCombineUseCase(GetUserCombineUseCase.Params("octocat"))
+        },
+        onSideEffectEvent = sideEffectEventCallback,
+    )
 }
+
+// TODO : 이것도 따로 파일 빼기
+typealias SideEffectEventCallback = (Event<FailureState>) -> Unit
