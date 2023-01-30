@@ -1,6 +1,7 @@
 package com.kakaovx.practice.networkmodule.ui.view
 
 import androidx.lifecycle.viewModelScope
+import com.kakaovx.practice.networkmodule.network.SideEffectEventCallback
 import com.kakaovx.practice.networkmodule.operator.apiOperator
 import com.kakaovx.practice.networkmodule.operator.requestCombineOperator
 import com.kakaovx.practice.networkmodule.operator.requestOperator
@@ -64,6 +65,3 @@ class MainStateFlowViewModel @Inject constructor(
         onSideEffectEvent = sideEffectEventCallback,
     )
 }
-
-// TODO : 이것도 따로 파일 빼기
-typealias SideEffectEventCallback = (Event<FailureState>) -> Unit
