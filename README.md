@@ -9,6 +9,7 @@
 - DSL을 사용하여 Gradle을 깔끔하게 유지합니다. 
 - Timeout Exception이 발생할 경우 CoroutineExceptionHandler로 잡을 수 있습니다. (0)
 - API 호출 실패시 재시도를 시도하면 해당 API들이 재호출됩니다. 
+- 로딩상태를 표시합니다. (0)
 <br/>
 
 🔍 로딩시 어떤 UI가 대세인지 찾아보기 (ex. 프로그래스바)
