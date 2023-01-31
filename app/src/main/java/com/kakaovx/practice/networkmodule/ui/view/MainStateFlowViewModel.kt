@@ -34,10 +34,8 @@ class MainStateFlowViewModel @Inject constructor(
     val userCombine: StateFlow<State> = _userCombine.asStateFlow()
 
     init {
-        viewModelScope.launch {
-            requestUserInfo()
-            requestUserCombine()
-        }
+        requestUserInfo()
+        requestUserCombine()
     }
 
     private val sideEffectEventCallback = object : SideEffectEventCallback {
@@ -50,18 +48,21 @@ class MainStateFlowViewModel @Inject constructor(
 
     val userCombineApiOperator = userCombine.apiOperator(sideEffectEventCallback)
 
-    // TODO : 제발 재시도!!!!!!
-    private suspend fun requestUserInfo() = _userInfo.requestOperator(
-        onApi = {
-            getUserInfoUseCase(GetUserInfoUseCase.Params("octocat"))
-        },
-        onSideEffectEvent = sideEffectEventCallback,
-    )
+    fun requestUserInfo() = viewModelScope.launch {
+        _userInfo.requestOperator(
+            onApi = {
+                getUserInfoUseCase(GetUserInfoUseCase.Params("octocat"))
+            },
+            onSideEffectEvent = sideEffectEventCallback,
+        )
+    }
 
-    private suspend fun requestUserCombine() = _userCombine.requestCombineOperator(
-        onApi = {
-            getUserCombineUseCase(GetUserCombineUseCase.Params("octocat"))
-        },
-        onSideEffectEvent = sideEffectEventCallback,
-    )
+    fun requestUserCombine() = viewModelScope.launch {
+        _userCombine.requestCombineOperator(
+            onApi = {
+                getUserCombineUseCase(GetUserCombineUseCase.Params("octocat"))
+            },
+            onSideEffectEvent = sideEffectEventCallback,
+        )
+    }
 }
