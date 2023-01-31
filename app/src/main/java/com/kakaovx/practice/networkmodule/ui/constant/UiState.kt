@@ -40,7 +40,8 @@ sealed class LoadingState : State {
  */
 sealed class FailureState : State {
     data class Error(
-        val errorType: ErrorType, val errorCode: ServerStatusCode
+        val errorType: ErrorType,
+        val errorCode: ServerStatusCode
     ) : FailureState()
 
     data class Exception(

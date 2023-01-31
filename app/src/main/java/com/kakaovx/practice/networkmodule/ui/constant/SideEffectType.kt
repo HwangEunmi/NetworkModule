@@ -1,5 +1,9 @@
 package com.kakaovx.practice.networkmodule.ui.constant
 
+import com.kakaovx.practice.networkmodule.ui.constant.SideEffectType.ERROR_POPUP
+import com.kakaovx.practice.networkmodule.ui.constant.SideEffectType.MOVE_LOGIN
+import com.kakaovx.practice.networkmodule.ui.constant.SideEffectType.RETRY
+
 /**
  * @author Jinny
  * Error/Exception인 경우의 SideEffect 코드 목록 클래스
