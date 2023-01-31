@@ -46,7 +46,7 @@ class MainStateFlowActivity : AppCompatActivity() {
                         NetworkResultObserver(
                             loadingHandleCallback,
                             onSuccessCallback = {
-                                Log.d("THEEND", "it: $it")
+                                Log.d("THEEND", "Call Success it: $it")
                             }
                         )
                     )
@@ -73,6 +73,7 @@ class MainStateFlowActivity : AppCompatActivity() {
                 SideEffectType.ERROR_POPUP -> Log.d("THEEND", "에러팝업 호출하기")
                 SideEffectType.RETRY -> {
                     Log.d("THEEND", "재시도 버튼 보여주기")
+                    viewModel.requestUserInfo()
                 }
                 SideEffectType.MOVE_LOGIN -> Log.d("THEEND", "로그인 화면으로 이동하기")
             }
