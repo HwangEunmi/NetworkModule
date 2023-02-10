@@ -10,6 +10,7 @@
 - Timeout Exception이 발생할 경우 CoroutineExceptionHandler로 잡을 수 있습니다. (0)
 - API 호출 실패시 재시도를 시도하면 해당 API들이 재호출됩니다. (0) -> 추후 개선예정
 - 로딩상태를 표시합니다. (0)
+- Entity <-> Domain용 Mapper로 각 레이어에 맞는 데이터 형식을 만듭니다.  
 <br/>
 
 ❓ API 호출 실패시 재시도하기 (확장적이게 코드로 분리) (0)
