@@ -14,5 +14,4 @@ class App : Application() {
         lateinit var appContext: Application
             private set
     }
-
 }

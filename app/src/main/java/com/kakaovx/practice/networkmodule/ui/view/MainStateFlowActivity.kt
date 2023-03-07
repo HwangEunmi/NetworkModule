@@ -8,14 +8,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.kakaovx.practice.networkmodule.data.network.LoadingHandleCallback
+import com.kakaovx.practice.networkmodule.data.network.NetworkCallResultObserver
 import com.kakaovx.practice.networkmodule.databinding.ActivityStateflowMainBinding
-import com.kakaovx.practice.networkmodule.network.LoadingHandleCallback
-import com.kakaovx.practice.networkmodule.network.NetworkResultObserver
 import com.kakaovx.practice.networkmodule.ui.constant.LoadingState
 import com.kakaovx.practice.networkmodule.ui.constant.SideEffectType
 import com.kakaovx.practice.networkmodule.ui.view.base.BaseStateFlowViewModel
-import com.kakaovx.practice.networkmodule.util.EventObserver
-import com.kakaovx.practice.networkmodule.util.EventUnhandledContent
+import com.kakaovx.practice.networkmodule.util_event.EventObserver
+import com.kakaovx.practice.networkmodule.util_event.EventUnhandledContent
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -43,7 +43,7 @@ class MainStateFlowActivity : AppCompatActivity() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 launch {
                     viewModel.userInfoApiOperator.collect(
-                        NetworkResultObserver(
+                        NetworkCallResultObserver(
                             loadingHandleCallback,
                             onSuccessCallback = {
                                 Log.d("THEEND", "Call Success it: $it")
@@ -53,14 +53,14 @@ class MainStateFlowActivity : AppCompatActivity() {
                 }
 
                 launch {
-                    viewModel.userCombineApiOperator.collect(
-                        NetworkResultObserver(
-                            loadingHandleCallback,
-                            onSuccessCallback = {
-                                Log.d("THEEND", "it2: $it")
-                            }
-                        )
-                    )
+                    // viewModel.userCombineApiOperator.collect(
+                    //     NetworkResultObserver(
+                    //         loadingHandleCallback,
+                    //         onSuccessCallback = {
+                    //             Log.d("THEEND", "it2: $it")
+                    //         }
+                    //     )
+                    // )
                 }
             }
         }

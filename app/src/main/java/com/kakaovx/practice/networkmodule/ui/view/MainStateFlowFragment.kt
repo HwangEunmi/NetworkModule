@@ -13,8 +13,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.kakaovx.practice.networkmodule.databinding.ActivityStateflowMainBinding
 import com.kakaovx.practice.networkmodule.ui.constant.SideEffectType
 import com.kakaovx.practice.networkmodule.ui.view.base.BaseStateFlowViewModel
-import com.kakaovx.practice.networkmodule.util.EventObserver
-import com.kakaovx.practice.networkmodule.util.EventUnhandledContent
+import com.kakaovx.practice.networkmodule.util_event.EventObserver
+import com.kakaovx.practice.networkmodule.util_event.EventUnhandledContent
 import kotlinx.coroutines.launch
 
 class MainStateFlowFragment : Fragment() {

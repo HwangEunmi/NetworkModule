@@ -1,18 +1,18 @@
 package com.kakaovx.practice.networkmodule.ui.view
 
 import androidx.lifecycle.viewModelScope
-import com.kakaovx.practice.networkmodule.network.SideEffectEventCallback
-import com.kakaovx.practice.networkmodule.operator.apiOperator
-import com.kakaovx.practice.networkmodule.operator.requestCombineOperator
-import com.kakaovx.practice.networkmodule.operator.requestOperator
+import com.kakaovx.practice.networkmodule.data.network.SideEffectEventCallback
+import com.kakaovx.practice.networkmodule.data.network.operator.apiOperator
+import com.kakaovx.practice.networkmodule.data.network.operator.requestCombineOperator
+import com.kakaovx.practice.networkmodule.data.network.operator.requestOperator
+import com.kakaovx.practice.networkmodule.domain.usecase.GetUserCombineUseCase
+import com.kakaovx.practice.networkmodule.domain.usecase.GetUserInfoUseCase
+import com.kakaovx.practice.networkmodule.domain.usecase.GetUserListUseCase
 import com.kakaovx.practice.networkmodule.ui.constant.FailureState
 import com.kakaovx.practice.networkmodule.ui.constant.IdleState
 import com.kakaovx.practice.networkmodule.ui.constant.State
 import com.kakaovx.practice.networkmodule.ui.view.base.BaseStateFlowViewModel
-import com.kakaovx.practice.networkmodule.usecase.GetUserCombineUseCase
-import com.kakaovx.practice.networkmodule.usecase.GetUserInfoUseCase
-import com.kakaovx.practice.networkmodule.usecase.GetUserListUseCase
-import com.kakaovx.practice.networkmodule.util.Event
+import com.kakaovx.practice.networkmodule.util_event.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -35,7 +35,7 @@ class MainStateFlowViewModel @Inject constructor(
 
     init {
         requestUserInfo()
-        requestUserCombine()
+        // requestUserCombine()
     }
 
     private val sideEffectEventCallback = object : SideEffectEventCallback {
