@@ -5,6 +5,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'dagger.hilt.android.plugin'
     id 'kotlin-kapt'
+    // id 'com.google.devtools.ksp'
     id 'org.jlleitschuh.gradle.ktlint'
     id 'io.gitlab.arturbosch.detekt'
 }
@@ -53,6 +54,7 @@ dependencies {
 
     implementation Dependencies.hilt
     kapt Dependencies.hiltCompiler
+    // ksp Dependencies.hiltCompiler
 
     implementation platform(Dependencies.okhttpPlatform)
     implementation Dependencies.okhttp
